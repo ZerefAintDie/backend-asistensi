@@ -1,37 +1,14 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from src.backend.routes.users import router as users_router
+from src.backend.routes.events import router as events_router
+from src.backend.routes.registrations import router as registrations_router
 
-app = FastAPI()
+app = FastAPI(title="Backend API", version="1.0.0")
 
-items = []
+app.include_router(users_router)
+app.include_router(events_router)
+app.include_router(registrations_router)
 
-class Item(BaseModel):
-    name: str
-    price: int
-
-#GET
-@app.get("/items")
-def get_items():
-    return items
-
-# POST
-@app.post("/items")
-def create_item(item: Item):
-    items.append(item.dict())
-    return item
-
-# PUT
-@app.put("/items/{item_id}")
-def update_item(item_i: int, updated_item: Item):
-    if item_i < len(items):
-        items[item_i] = updated_item.dict()
-        return updated_item
-    return {"error": "Item not found"}
-
-# DELETE
-@app.delete("/items/{item_id}")
-def delete_item(item_i: int):
-    if item_i < len(items):
-        deleted_item = items.pop(item_i)
-        return {"message": "Item deleted", "item": deleted_item}
-    return {"error": "Item not found"}
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Backend API"}

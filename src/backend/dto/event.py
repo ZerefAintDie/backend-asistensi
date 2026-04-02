@@ -21,3 +21,11 @@ class EventRequest(BaseModel):
 
 class EventResponse(Response):
     pass
+
+
+class GetEventRequest(BaseModel):
+    id: str = Field(default="1iu2g4i1u24i1u2", examples=["1i27ugi1u2gi41u"])
+
+
+class GetEventResponse(Response):
+    pass

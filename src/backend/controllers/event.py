@@ -1,7 +1,7 @@
 from fastapi import Depends
 
 from src.backend.database.models.event import Event
-from src.backend.dto.event import EventRequest
+from src.backend.dto.event import EventRequest, GetEventRequest
 from src.backend.services.event import EventService
 
 
@@ -18,4 +18,8 @@ class EventController:
             end_at=req_body.end_date,
         )
         response = self.event_service.create_event(event_data)
+        return response
+
+    def get_event(self, req_params: GetEventRequest):
+        response = self.event_service.get_event(req_params.id)
         return response

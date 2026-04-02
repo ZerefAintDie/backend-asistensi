@@ -17,7 +17,7 @@ class EventRepository:
         self.session.refresh(event)
         return event
 
-    def get(self, event_id: uuid.UUID) -> Event:
+    def get(self, event_id: str) -> Event:
         event = self.session.get(Event, event_id)
         if not event:
             raise ValueError(f"Event with id {event_id} not found")
